@@ -23,7 +23,7 @@
 1. 克隆本仓库：
 
    ```sh
-   git clone https://github.com/<owner>/dsh-remaining-balance.git
+   git clone https://github.com/hyc3z/dsh-remaining-balance.git
    ```
 
 2. 在 Harness 里打开 **插件 → 添加插件**，选择克隆下来的目录（该目录里有 `package.json` 和 `cordis.patch.yml`）。
