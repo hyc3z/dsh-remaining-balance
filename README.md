@@ -1,110 +1,112 @@
 # dsh-remaining-balance
 
-在 DeepSeek Harness 输入框下方的统计标签里，用**钱包图标 + 金额**显示当前登录账户的剩余余额；点一下展开**今日用量**，按 API Key 和模型列出今天花了多少。
+Shows your signed-in DeepSeek account balance as a wallet icon and amount in the DeepSeek Harness composer statistics row, and opens today's cost per API key and model on click.
 
-![输入框下方的余额标签](docs/preview.png)
+**English** | [简体中文](README.zh-CN.md)
 
-![点击展开的今日用量面板](docs/preview-panel.png)
+![Balance pill in the composer statistics row](docs/preview.png)
 
-> 截图里最右侧 `👛 ¥108.28` 是本插件加的；点开后是「今日用量」面板，数据与 DeepSeek Platform 用量页同源。
+![The today's-usage panel opened from the pill](docs/preview-panel.png)
 
-## 功能
+> The `👛 ¥108.28` chip at the right end of the row is this plugin. Clicking it opens the **Today's usage** panel, which reads the same data as the DeepSeek Platform usage page. Screenshots show the Harness UI in Chinese; the plugin follows the interface language for its own copy.
 
-- **一眼看到还剩多少钱**：在「8 轮 204 步 · 208 tok/s」「46.5M tok · 缓存命中 99.6%」「34%」这排统计标签中插入一项，图标 + 金额，和内置标签同字号、同颜色、同间距。
-- **点击看今日用量**：弹出的面板分两列列出今天每个 API Key 的花费，以及它下面各模型的花费；范围固定今日 `00:00–24:00`（本地时区）。
-- **同一份数据源**：余额来自 Harness 的账户服务（与「设置 → 账户」一致）；今日用量来自 Platform 用量页所用的 `/api/v0/usage/by_api_key/cost` 接口，用同一个账户登录态读取。
-- **自动刷新**：余额每 60 秒、以及窗口重新聚焦时刷新；用量面板打开时读取，60 秒内重复打开不重复请求。
-- **不花 token**：只查账户余额和用量，不发任何模型请求。
-- **不造假数据**：未登录、读取中、读取失败时**什么都不显示**；余额为负时数字变警示色。
-- **悬停看明细**：鼠标放在金额上能看到「充值余额 / 赠金余额」分项。
-- **深浅主题自适应**：颜色全部取 Harness 主题变量；弹层使用与内置统计弹窗相同的菜单材质。
+## Features
 
-## 安装
+- **See what is left at a glance.** One extra entry in the row next to the turn/speed and token pills, with the same font size, color, and spacing as the built-in readings.
+- **Click for today's usage.** The panel lists today's cost for each API key and, indented, for each model under it. The range is fixed to today `00:00–24:00` in the local time zone.
+- **One source per value.** The balance comes from Harness's account service (the same value as **Settings → Account**); today's usage comes from `/api/v0/usage/by_api_key/cost`, the endpoint the Platform usage page uses, authorized with the same account login.
+- **Refreshes itself.** The balance re-reads every 60 seconds and whenever the window regains focus. The usage panel reads when opened and reuses a 60-second cache.
+- **No model requests.** Only the account balance and usage are read; no prompt is sent.
+- **Never invents numbers.** Nothing renders while signed out, loading, or after a failed read; a negative balance is shown in the warning color.
+- **Hover for the split.** The tooltip keeps the topped-up and granted wallet rows separate.
+- **Follows the theme.** Every color is a Harness theme variable, and the panel uses the same menu material as the built-in statistics dialogs.
 
-前置条件：
+## Install
 
-- 已安装 DeepSeek Harness（桌面版 / Web 版），并在 Harness 里**登录了 DeepSeek 账户**；
-- 从 Git 仓库安装时，`PATH` 里需要有 `git`（Harness 的插件安装器会调用 pnpm / git）。
+Prerequisites:
 
-### 方式一：从 GitHub 直接安装（推荐，一行搞定）
+- DeepSeek Harness (Desktop or Web), signed in to a DeepSeek account.
+- `git` on `PATH` when installing from the repository (Harness's plugin installer drives pnpm and git).
 
-打开 **插件 → 添加插件**，在输入框里填：
+### Option 1 — from GitHub (recommended, one line)
+
+Open **Plugins → Add plugin** and enter:
 
 ```
 github:hyc3z/dsh-remaining-balance
 ```
 
-或者等价地填完整地址：
+or the equivalent full address:
 
 ```
 https://github.com/hyc3z/dsh-remaining-balance
 ```
 
-点安装，然后 `Ctrl+R` 刷新页面即可。
+Install, then refresh the page with `Ctrl+R`.
 
-> 「添加插件」接受包名、Git 地址、tgz 包或本地绝对路径，这条命令与 README 里的 `dsh plugin add ...` 等价。
+> **Add plugin** accepts a package name, a Git address, a tarball, or an absolute local path — the same spec `dsh plugin add` takes.
 
-### 方式二：下载打包好的 tgz
+### Option 2 — packaged tarball
 
-在 [Releases](https://github.com/hyc3z/dsh-remaining-balance/releases) 里下载 `dsh-remaining-balance-<version>.tgz`，在「添加插件」里填入该文件的绝对路径。
+Download `dsh-remaining-balance-<version>.tgz` from [Releases](https://github.com/hyc3z/dsh-remaining-balance/releases) and enter its absolute path in **Add plugin**.
 
-### 方式三：本地目录
+### Option 3 — local directory
 
 ```sh
 git clone https://github.com/hyc3z/dsh-remaining-balance.git
 ```
 
-在「添加插件」里选择这个目录。
+Choose that directory in **Add plugin**.
 
-### 关于「DeepSeek 插件商店」
+### About the DeepSeek plugin store
 
-Harness 的「插件」页里有一个官方插件目录（Discover），目前只收录随安装包分发的官方插件，**没有面向第三方插件的公开提交入口**，所以第三方插件目前的标准分发方式就是上面三种：Git 地址、tgz、本地目录。等这个包发布到 npm 之后，「添加插件」里直接填 `dsh-remaining-balance` 就能装（仓库里的 Release 工作流已经为发布预留了位置）。
+The **Plugins** page ships an official catalog (Discover) that only lists plugins distributed with the installation; there is **no public submission entry for third-party plugins**. Third-party bundles are distributed through the three routes above: a Git address, a tarball, or a local directory. The package name `dsh-remaining-balance` is available on npm, so a future publish would make `Add plugin → dsh-remaining-balance` work too.
 
-卸载：在 **插件** 页关掉它，或移除该 bundle，不会留下数据。
+To remove it, switch the bundle off on the **Plugins** page or remove it; nothing is left behind.
 
-## 今日用量面板
+## Today's usage panel
 
-- 接口：`GET https://platform.deepseek.com/api/v0/usage/by_api_key/cost?start=<day-start>&end=<next-day-start>&tz=<offset>`，返回按 `api_key` × `model` 的逐小时花费；Host 侧汇总成「每个 key 一行 + 模型子行」。
-- 该接口只接受**整天窗口**（本地时区午夜到次日午夜），所以面板固定看今天，不做日期选择。
-- Host 把结果缓存 60 秒，避免反复打开面板时重复请求 Platform。
-- 只返回金额、key 名称、模型名；不返回任何 Token、Cookie 或 API Key。
+- Host reads `GET https://platform.deepseek.com/api/v0/usage/by_api_key/cost?start=<day-start>&end=<next-day-start>&tz=<offset>`, which returns hourly cost per `api_key` × `model`, and folds it into one row per key with model sub-rows.
+- The endpoint accepts **whole local days only**, so the panel always shows today and offers no date picker.
+- The Host caches the result for 60 seconds so reopening the panel does not re-query Platform.
+- Only amounts, key names, and model names cross the route; no token, cookie, or API key is returned.
 
-## 工作原理
+## How it works
 
-- **Host 半**（`index.js`）注册两个只读路由：
-  - `GET /dsh-remaining-balance/balance`：调用 Harness 的 `deepseekAccount` 服务读余额；
-  - `GET /dsh-remaining-balance/usage`：用账户登录态（`getPlatformSession()`）调用 Platform 用量接口，汇总今日花费。
-- **Client 半**（`client.js`）往 `conversation.composer.dock` 注册一个标签项，并通过 `react-dom` portal 把面板挂到 `body`，避免被输入框容器裁剪；余额优先走 Host 路由，路由不可用时回退到浏览器里的账户 Remote。
-- 诊断：宿主把最近一次结果码写到 `$DSH_HOME/balance-pill/diagnostics.json`（不含金额以外的账户信息，也没有 Token）。
+- **Host half** (`index.js`) registers two read-only routes:
+  - `GET /dsh-remaining-balance/balance` — reads the balance through Harness's `deepseekAccount` service.
+  - `GET /dsh-remaining-balance/usage` — reads today's cost with `getPlatformSession()`.
+- **Client half** (`client.js`) registers one `conversation.composer.dock` entry and portals the panel to `body` so the composer cannot clip it. The balance prefers the Host route and falls back to the account Remote in the browser.
+- Diagnostics: the Host writes the last result code to `$DSH_HOME/balance-pill/diagnostics.json` (no amounts beyond the pill, no tokens).
 
-## 已知限制
+## Limitations
 
-- 一次只显示**一个币种**的合计（人民币优先）；同时有美元余额时只显示人民币那笔，明细可在悬停提示里看到。
-- 余额与用量都依赖 Platform 账户；只用 API Key、没在 Harness 里登录账户的安装读不到数据，标签会保持隐藏。
-- Platform 用量接口不是公开 API，平台改版后可能失效；失效时面板显示「暂时读不到今日用量」，余额显示不受影响。
-- 余额刷新间隔固定 60 秒 + 聚焦即时刷新，暂不可配置。
+- Only one currency is headlined (CNY first); with a USD balance as well, the tooltip still shows the split.
+- Both values need the Platform account. An installation that only uses an API key and never signed in shows no pill.
+- The Platform usage endpoint is not a public API and may change; if it does, the panel reports that today's usage is unavailable while the balance keeps working.
+- The balance refresh rate is fixed at 60 seconds plus focus refreshes.
 
-## 目录结构
+## Layout
 
 ```
 .
-├── package.json              # bundle 清单（dsh.bundle + dsh.client）
-├── cordis.patch.yml          # 插入 remaining-balance 一行
-├── index.js                  # Host：余额与今日用量只读路由
-├── client.js                 # Client：统计标签项 + 用量弹层
-├── icon.svg                  # 插件图标
-├── locale/en.json            # 插件列表里的英文标题与说明
-├── locale/zh.json            # 中文标题与说明
-├── docs/preview.png          # 截图：统计标签里的余额
-├── docs/preview-panel.png    # 截图：今日用量面板
-└── .github/workflows/release.yml  # 打 tag 时打包并创建 Release
+├── package.json              # bundle manifest (dsh.bundle + dsh.client)
+├── cordis.patch.yml          # inserts the remaining-balance row
+├── index.js                  # Host: read-only balance and usage routes
+├── client.js                 # Client: dock entry + usage panel
+├── icon.svg                  # plugin icon
+├── locale/en.json            # English title and description in the plugin list
+├── locale/zh.json            # Chinese title and description
+├── docs/preview.png          # screenshot: the balance pill
+├── docs/preview-panel.png    # screenshot: today's usage panel
+└── .github/workflows/release.yml  # pack and release on a tag
 ```
 
-## 开发
+## Development
 
-- 无需构建：`index.js` 与 `client.js` 都是可直接加载的普通 JS。
-- 本地改完在 **插件** 页重新启用该 bundle，刷新页面即可生效。
-- 发布：打 `v*` tag 后由 GitHub Actions 执行 `npm pack` 并把 tgz 附到 Release；仓库 Secrets 配好 `NPM_TOKEN` 后可再加一步 `npm publish`。
+- No build step: `index.js` and `client.js` load as plain JavaScript.
+- After an edit, re-enable the bundle on the **Plugins** page and refresh the page.
+- Release: pushing a `v*` tag makes GitHub Actions run the syntax checks, `npm pack`, and attach the tarball to a Release. With an `NPM_TOKEN` secret, an `npm publish` step can follow.
 
 ## License
 
