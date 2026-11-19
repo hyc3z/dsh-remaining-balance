@@ -8,7 +8,7 @@
 
 ![点击展开的今日用量面板](docs/preview-panel.png)
 
-> 截图里最右侧 `👛 ¥108.28` 是本插件加的；点开后是「今日用量」面板，数据与 DeepSeek Platform 用量页同源。截图中的 Harness 界面是中文；插件自身的文案跟随界面语言切换。
+> 截图里最右侧 `👛 ¥108.28` 是本插件加的；点开后是「今日用量」面板，数据与 DeepSeek Platform 用量页同源。截图取自中文界面（[英文 README](README.md) 用的是英文界面截图），插件自身的文案跟随界面语言切换。
 
 ## 功能
 
@@ -97,8 +97,10 @@ Harness 的「插件」页里有一个官方插件目录（Discover），目前�
 ├── icon.svg                  # 插件图标
 ├── locale/en.json            # 插件列表里的英文标题与说明
 ├── locale/zh.json            # 中文标题与说明
-├── docs/preview.png          # 截图：统计标签里的余额
-├── docs/preview-panel.png    # 截图：今日用量面板
+├── docs/preview.png          # 截图：统计标签里的余额（中文界面）
+├── docs/preview-panel.png    # 截图：今日用量面板（中文界面）
+├── docs/preview.en.png       # 截图：统计标签里的余额（英文界面）
+├── docs/preview-panel.en.png # 截图：今日用量面板（英文界面）
 └── .github/workflows/release.yml  # 打 tag 时打包并创建 Release
 ```
 

@@ -4,11 +4,11 @@ Shows your signed-in DeepSeek account balance as a wallet icon and amount in the
 
 **English** | [简体中文](README.zh-CN.md)
 
-![Balance pill in the composer statistics row](docs/preview.png)
+![Balance pill in the composer statistics row](docs/preview.en.png)
 
-![The today's-usage panel opened from the pill](docs/preview-panel.png)
+![The today's-usage panel opened from the pill](docs/preview-panel.en.png)
 
-> The `👛 ¥108.28` chip at the right end of the row is this plugin. Clicking it opens the **Today's usage** panel, which reads the same data as the DeepSeek Platform usage page. Screenshots show the Harness UI in Chinese; the plugin follows the interface language for its own copy.
+> The `👛 ¥106.55` chip at the right end of the row is this plugin. Clicking it opens the **Today's usage** panel, which reads the same data as the DeepSeek Platform usage page. Screenshots show an English Harness UI with the plugin's own copy in English; the [Chinese README](README.zh-CN.md) uses captures from a Chinese UI.
 
 ## Features
 
@@ -97,8 +97,10 @@ To remove it, switch the bundle off on the **Plugins** page or remove it; nothin
 ├── icon.svg                  # plugin icon
 ├── locale/en.json            # English title and description in the plugin list
 ├── locale/zh.json            # Chinese title and description
-├── docs/preview.png          # screenshot: the balance pill
-├── docs/preview-panel.png    # screenshot: today's usage panel
+├── docs/preview.en.png      # screenshot: the balance pill (English UI)
+├── docs/preview-panel.en.png  # screenshot: today's usage panel (English UI)
+├── docs/preview.png         # screenshot: the balance pill (Chinese UI)
+├── docs/preview-panel.png   # screenshot: today's usage panel (Chinese UI)
 └── .github/workflows/release.yml  # pack and release on a tag
 ```
 
