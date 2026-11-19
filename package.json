@@ -1,6 +1,6 @@
 {
   "name": "dsh-remaining-balance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Show the signed-in DeepSeek account balance as a wallet icon and amount beside the composer statistics in DeepSeek Harness.",

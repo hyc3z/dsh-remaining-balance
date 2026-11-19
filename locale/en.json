@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Composer balance pill",
-    "description": "Shows the signed-in account's remaining balance as a wallet icon and amount beside the composer statistics, refreshed every 60 seconds and when the window regains focus. It reads the same Platform balance the Account settings page shows, through the existing sign-in; signed-out installs and failed reads show nothing. Turning the plugin off removes the reading and its once-a-minute balance read. No model request is made."
+    "title": "Remaining balance",
+    "description": "Shows the signed-in account's remaining balance as a wallet icon and amount beside the composer statistics, refreshed every 60 seconds and when the window regains focus. Clicking it opens today's cost per API key and model, read from the same Platform usage data the platform usage page shows. Signed-out installs and failed reads show nothing. Turning the plugin off removes the pill, the branch panel, and their account reads. No model request is made."
   }
 }
